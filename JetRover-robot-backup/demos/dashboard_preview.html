@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JetRover dashboard preview</title>
+  <style>
+    body { margin: 0; background: #12151b; color: #edf1f7; font: 16px system-ui, sans-serif; text-align: center; }
+    main { max-width: 950px; margin: auto; padding: 12px; }
+    .camera { height: min(58vh, 530px); display: grid; place-items: center; background: linear-gradient(135deg, #090d13, #24364c); border-radius: 10px; color: #bdd8f5; font-size: 1.2rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: left; margin-top: 12px; }
+    .card { background: #202631; padding: 14px; border-radius: 10px; }
+    button { font: inherit; padding: 11px 14px; border: 0; border-radius: 7px; background: #3478d0; color: white; cursor: pointer; touch-action: none; }
+    button:active, .drive button.active { background: #1e559c; box-shadow: 0 0 0 3px #82b6ff; }
+    .drive { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; text-align: center; }
+    .drive button { min-height: 48px; }
+    .blank { visibility: hidden; }
+    .joint { display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 7px; padding: 7px 0; border-bottom: 1px solid #394251; }
+    .pulse { color: #9ab6d8; min-width: 62px; text-align: right; }
+    .warn { color: #ffcc7a; font-size: .9rem; }
+    @media (max-width: 650px) { .grid { grid-template-columns: 1fr; } .joint { font-size: .9rem; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>JetRover control</h2>
+    <div class="camera">Live RGB camera appears here when connected</div>
+    <div class="warn">Preview only — hold WASD to drive or Q/E to open/close the gripper and see the highlighted control.</div>
+    <div class="grid">
+      <section class="card">
+        <h3>Drive</h3>
+        <div class="drive">
+          <button class="blank">.</button><button data-drive="forward">Forward (W)</button><button class="blank">.</button>
+          <button data-drive="left">Strafe left (A)</button><button>STOP</button><button data-drive="right">Strafe right (D)</button>
+          <button class="blank">.</button><button data-drive="backward">Backward (S)</button><button class="blank">.</button>
+        </div>
+        <p class="drive"><button>Turn left</button><button class="blank">.</button><button>Turn right</button></p>
+      </section>
+      <section class="card">
+        <h3>Arm and gripper</h3>
+        <p><button data-gripper="open">Open gripper (Q)</button> <button data-gripper="close">Close gripper (E)</button></p>
+        <p>Step: <button>10</button> <button>25</button> <button>50</button> pulses</p>
+        <div id="joints"></div>
+      </section>
+    </div>
+  </main>
+  <script>
+    const joints = ['Base rotation', 'Shoulder', 'Elbow', 'Wrist pitch', 'Wrist rotate', 'Gripper'];
+    document.getElementById('joints').innerHTML = joints.map((name, i) => `<div class="joint"><span>${name}</span><span class="pulse">${i === 5 ? 700 : 500}</span><button>−</button><button>+</button></div>`).join('');
+    const keyToDirection = {w: 'forward', a: 'left', s: 'backward', d: 'right'};
+    document.addEventListener('keydown', event => {
+      const direction = keyToDirection[event.key.toLowerCase()];
+      if (!direction) return;
+      event.preventDefault();
+      document.querySelector(`[data-drive="${direction}"]`).classList.add('active');
+    });
+    document.addEventListener('keyup', event => {
+      const direction = keyToDirection[event.key.toLowerCase()];
+      if (direction) document.querySelector(`[data-drive="${direction}"]`).classList.remove('active');
+    });
+    const gripToDirection = {q: 'open', e: 'close'};
+    document.addEventListener('keydown', event => {
+      const direction = gripToDirection[event.key.toLowerCase()];
+      if (!direction) return;
+      event.preventDefault();
+      document.querySelector(`[data-gripper="${direction}"]`).classList.add('active');
+    });
+    document.addEventListener('keyup', event => {
+      const direction = gripToDirection[event.key.toLowerCase()];
+      if (direction) document.querySelector(`[data-gripper="${direction}"]`).classList.remove('active');
+    });
+    document.querySelectorAll('[data-drive]').forEach(button => {
+      button.addEventListener('pointerdown', () => button.classList.add('active'));
+      for (const event of ['pointerup', 'pointerleave', 'pointercancel']) {
+        button.addEventListener(event, () => button.classList.remove('active'));
+      }
+    });
+    document.querySelectorAll('[data-gripper]').forEach(button => {
+      button.addEventListener('pointerdown', () => button.classList.add('active'));
+      for (const event of ['pointerup', 'pointerleave', 'pointercancel']) {
+        button.addEventListener(event, () => button.classList.remove('active'));
+      }
+    });
+  </script>
+</body>
+</html>
