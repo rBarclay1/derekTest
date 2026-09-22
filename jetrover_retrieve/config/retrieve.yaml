@@ -1,0 +1,18 @@
+/**:
+  ros__parameters:
+    target_color: "red"          # red, green, blue, or any
+    show_debug_image: true
+    min_object_area: 500.0
+    center_tolerance_px: 40.0
+    grasp_distance_min: 0.16     # meters
+    grasp_distance_max: 0.28     # meters
+    search_yaw_speed: 0.35
+    max_linear_speed: 0.12
+    max_yaw_speed: 0.6
+    confirm_frames: 12
+    lost_frames_limit: 20
+    color_topic: "/depth_cam/rgb/image_raw"
+    depth_topic: "/depth_cam/depth/image_raw"
+    cmd_vel_topic: "/controller/cmd_vel"
+    servo_topic: "/servo_controller"
+    action_group_path: "/home/ubuntu/software/arm_pc/ActionGroups"
