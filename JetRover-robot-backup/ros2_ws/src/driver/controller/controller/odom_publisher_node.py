@@ -78,6 +78,8 @@ class Controller(Node):
         self.linear_x = 0.0
         self.linear_y = 0.0
         self.angular_z = 0.0
+        self.cmd_vel_lock = threading.RLock()
+        self.last_cmd_vel_time = time.monotonic()
         self.pose_yaw = 0
         self.last_time = None
         self.current_time = None
@@ -95,6 +97,10 @@ class Controller(Node):
         self.declare_parameter('linear_correction_factor_tank', 0.52)
         self.declare_parameter('angular_correction_factor', 1.00)
         self.declare_parameter('machine_type', os.environ['MACHINE_TYPE'])
+        self.declare_parameter('cmd_vel_timeout_sec', 0.5)
+        self.cmd_vel_timeout = self.get_parameter('cmd_vel_timeout_sec').value
+        if not math.isfinite(self.cmd_vel_timeout) or self.cmd_vel_timeout <= 0:
+            raise ValueError('cmd_vel_timeout_sec must be finite and positive')
         
         self.pub_odom_topic = self.get_parameter('pub_odom_topic').value
         self.base_frame_id = self.get_parameter('base_frame_id').value
@@ -132,6 +138,7 @@ class Controller(Node):
         self.create_service(Trigger, 'controller/load_calibrate_param', self.load_calibrate_param)
 
         self.create_service(Trigger, '~/init_finish', self.get_node_state)
+        threading.Thread(target=self.command_watchdog, daemon=True).start()
         self.get_logger().info('\033[1;32m%s\033[0m' % 'start')
 
     def get_node_state(self, request, response):
@@ -140,6 +147,9 @@ class Controller(Node):
 
     def shutdown(self, signum, frame):
         self.get_logger().info('\033[1;32m%s\033[0m' % 'shutdown')
+        if hasattr(self, 'motor_pub'):
+            with self.cmd_vel_lock:
+                self._apply_cmd_vel(Twist())
         rclpy.shutdown()
 
     def load_calibrate_param(self, request, response):
@@ -189,6 +199,15 @@ class Controller(Node):
         self.cmd_vel_callback(msg)
 
     def cmd_vel_callback(self, msg):
+        with self.cmd_vel_lock:
+            values = (msg.linear.x, msg.linear.y, msg.angular.z)
+            if not all(math.isfinite(value) for value in values):
+                self._apply_cmd_vel(Twist())
+                return
+            self.last_cmd_vel_time = time.monotonic()
+            self._apply_cmd_vel(msg)
+
+    def _apply_cmd_vel(self, msg):
         # msg.linear.x *= self.linear_factor
         # msg.linear.y *= self.linear_factor
         # msg.angular.z *= self.angular_factor
@@ -232,6 +251,16 @@ class Controller(Node):
                 data.state = [servo_state]
                 data.duration = 0.02
                 self.servo_state_pub.publish(data)
+
+    def command_watchdog(self):
+        # Run independently of odometry publication and ROS callbacks. A
+        # mission crash or stalled callback must not leave wheels commanded.
+        while rclpy.ok():
+            with self.cmd_vel_lock:
+                stale = time.monotonic() - self.last_cmd_vel_time > self.cmd_vel_timeout
+                if stale and any((self.linear_x, self.linear_y, self.angular_z)):
+                    self._apply_cmd_vel(Twist())
+            time.sleep(0.05)
 
     def cal_odom_fun(self):
         while True:

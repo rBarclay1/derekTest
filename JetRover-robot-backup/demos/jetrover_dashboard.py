@@ -123,7 +123,8 @@ class Robot(Node):
     def set_joint_target(self, servo_id, target):
         if servo_id not in JOINTS:
             raise ValueError('Unknown servo')
-        target = max(0, min(1000, int(target)))
+        low, high = (200, 700) if servo_id == 10 else (0, 1000)
+        target = max(low, min(high, int(target)))
         with self.lock:
             self.positions[servo_id] = target
         message = ServosPosition()
@@ -147,7 +148,7 @@ class Robot(Node):
         # Vendor examples use lower pulses to release and higher pulses to grip.
         # Five pulses per update, repeated every 0.12 s, gives deliberate motion.
         with self.lock:
-            target = max(150, min(700, self.positions[10] + int(direction) * 5))
+            target = max(200, min(700, self.positions[10] + int(direction) * 5))
         return self.set_joint_target(10, target)
 
 

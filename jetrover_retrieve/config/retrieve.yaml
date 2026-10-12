@@ -1,18 +1,58 @@
 /**:
   ros__parameters:
-    target_color: "red"          # red, green, blue, or any
-    show_debug_image: true
+    target_color: "red"                 # red, green, blue, or any
+    auto_start: false                   # start via /retrieve_object/start
+    allow_unverified_pick: false        # otherwise pause for operator confirmation
+    show_debug_image: false             # suitable for headless robot use
     min_object_area: 500.0
     center_tolerance_px: 40.0
-    grasp_distance_min: 0.16     # meters
-    grasp_distance_max: 0.28     # meters
-    search_yaw_speed: 0.35
-    max_linear_speed: 0.12
-    max_yaw_speed: 0.6
+    grasp_distance_min: 0.16             # camera distance in meters; calibrate on robot
+    grasp_distance_max: 0.28
+    min_valid_depth_m: 0.05
+    max_valid_depth_m: 5.0
+    search_yaw_speed: 0.25               # radians/sec
+    max_linear_speed: 0.08              # meters/sec
+    max_yaw_speed: 0.4
+    return_linear_speed: 0.06
+    detection_confirm_frames: 5
     confirm_frames: 12
     lost_frames_limit: 20
+    max_target_jump_px: 100.0
+    sensor_timeout_sec: 0.5
+    max_rgb_depth_skew_sec: 0.15
+    startup_timeout_sec: 20.0
+    search_timeout_sec: 60.0
+    approach_timeout_sec: 60.0
+    return_timeout_sec: 90.0
+    arm_timeout_sec: 30.0
+    verify_timeout_sec: 60.0
+    mission_timeout_sec: 240.0
+    max_home_distance_m: 3.0
+    home_position_tolerance_m: 0.08
+    home_heading_tolerance_rad: 0.12
+    return_turn_tolerance_rad: 0.25
+    home_settle_sec: 0.5
     color_topic: "/depth_cam/rgb/image_raw"
+    # Must be depth registered to the RGB pixels, at the same resolution.
+    # Equal image sizes alone do not establish registration; verify on robot.
     depth_topic: "/depth_cam/depth/image_raw"
+    odom_topic: "/odom"                  # controller.launch.py EKF output
     cmd_vel_topic: "/controller/cmd_vel"
     servo_topic: "/servo_controller"
+    controller_ready_service: "/controller_manager/init_finish"
+    # Chassis defaults to MACHINE_TYPE; supported: JetRover_Mecanum / JetRover_Tank.
     action_group_path: "/home/ubuntu/software/arm_pc/ActionGroups"
+    use_action_groups: false             # true requires all named .d6a files
+    ready_action: "pick_init"
+    pick_action: "pick"
+    place_action: "place_center"
+    gripper_min: 200
+    gripper_max: 700
+    gripper_open: 200
+    gripper_closed: 600
+    # Servo ID / pulse pairs (1–5). Gripper is managed separately.
+    # These are inherited starting poses, not hardware-calibrated poses.
+    ready_pose: [1, 500, 2, 750, 3, 40, 4, 210, 5, 500]
+    grasp_pose: [1, 500, 2, 620, 3, 160, 4, 280, 5, 500]
+    carry_pose: [1, 500, 2, 750, 3, 40, 4, 210, 5, 500]
+    place_pose: [1, 500, 2, 620, 3, 160, 4, 280, 5, 500]
