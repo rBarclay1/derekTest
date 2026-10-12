@@ -1,0 +1,187 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 7 /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 278 >>
+stream
+0 0 0 rg 0 0 720 405 re f
+1 1 1 rg
+BT /F2 44 Tf 1 0 0 1 48 208.0 Tm (Status Report) Tj ET
+BT /F2 44 Tf 1 0 0 1 48 150.0 Tm (Week 8) Tj ET
+BT /F1 22 Tf 1 0 0 1 48 92.0 Tm (JetRover Autonomous Retrieval) Tj ET
+BT /F1 17 Tf 1 0 0 1 48 42.0 Tm (Andy Estrada and Riley Barclay) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 720 405] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 850 >>
+stream
+0 0 0 rg 0 0 720 405 re f
+1 1 1 rg
+BT /F2 30 Tf 1 0 0 1 48 333.0 Tm (Project Goal & Starting Point) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 271.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 271.0 Tm (Goal: find an object, drive to it, pick it up, and bring it) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 246.0 Tm (back to the starting location.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 205.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 205.0 Tm (Manual driving had previously worked on the robot.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 164.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 164.0 Tm (Existing code supported color detection, approach, and basic) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 139.0 Tm (arm actions.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 98.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 98.0 Tm (This week focused on software; the robot was unavailable.) Tj ET
+BT /F1 11 Tf 1 0 0 1 645 17.0 Tm (2) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 720 405] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 822 >>
+stream
+0 0 0 rg 0 0 720 405 re f
+1 1 1 rg
+BT /F2 30 Tf 1 0 0 1 48 333.0 Tm (Work Completed This Week) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 271.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 271.0 Tm (Reviewed the repository and robot driver interfaces.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 230.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 230.0 Tm (Implemented a mission that saves the starting position and) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 205.0 Tm (heading.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 164.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 164.0 Tm (Added odometry-based return navigation and placement at home.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 123.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 123.0 Tm (Updated configuration, launch options, and operating) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 98.0 Tm (instructions.) Tj ET
+BT /F1 11 Tf 1 0 0 1 645 17.0 Tm (3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 720 405] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 879 >>
+stream
+0 0 0 rg 0 0 720 405 re f
+1 1 1 rg
+BT /F2 30 Tf 1 0 0 1 48 333.0 Tm (Updated Mission Flow) Tj ET
+BT /F2 18 Tf 1 0 0 1 48 281.0 Tm (Save home > Search > Align > Approach > Pick) Tj ET
+BT /F2 18 Tf 1 0 0 1 48 258.5 Tm (Confirm pickup > Return home > Place > Complete) Tj ET
+BT /F1 18 Tf 1 0 0 1 54 207.0 Tm (\225) Tj ET
+BT /F1 18 Tf 1 0 0 1 69 207.0 Tm (Camera detection tracks a red, green, or blue object.) Tj ET
+BT /F1 18 Tf 1 0 0 1 54 172.5 Tm (\225) Tj ET
+BT /F1 18 Tf 1 0 0 1 69 172.5 Tm (Depth readings guide alignment and approach to pickup range.) Tj ET
+BT /F1 18 Tf 1 0 0 1 54 138.0 Tm (\225) Tj ET
+BT /F1 18 Tf 1 0 0 1 69 138.0 Tm (The arm lifts the object into a carrying pose.) Tj ET
+BT /F1 18 Tf 1 0 0 1 54 103.5 Tm (\225) Tj ET
+BT /F1 18 Tf 1 0 0 1 69 103.5 Tm (The robot returns to its saved pose before placing it.) Tj ET
+BT /F1 11 Tf 1 0 0 1 645 17.0 Tm (4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 720 405] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 844 >>
+stream
+0 0 0 rg 0 0 720 405 re f
+1 1 1 rg
+BT /F2 30 Tf 1 0 0 1 48 333.0 Tm (Control & Reliability Improvements) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 271.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 271.0 Tm (Added explicit start/stop controls and mission status) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 246.0 Tm (reporting.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 205.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 205.0 Tm (Added sensor freshness checks and movement timeouts.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 164.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 164.0 Tm (Removed forward movement without valid depth.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 123.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 123.0 Tm (Made arm actions responsive to stop requests; added gripper) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 98.0 Tm (limits and a chassis command timeout.) Tj ET
+BT /F1 11 Tf 1 0 0 1 645 17.0 Tm (5) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 720 405] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+15 0 obj
+<< /Length 904 >>
+stream
+0 0 0 rg 0 0 720 405 re f
+1 1 1 rg
+BT /F2 30 Tf 1 0 0 1 48 333.0 Tm (Current Status & Limitations) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 271.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 271.0 Tm (Initial implementation is complete; no builds or tests have) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 246.0 Tm (been run.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 205.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 205.0 Tm (Pickup confirmation requires an operator by default.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 164.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 164.0 Tm (Automatic return can be enabled, but pickup then remains) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 139.0 Tm (unverified.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 98.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 98.0 Tm (Return assumes a clear route. Obstacle avoidance and physical) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 73.0 Tm (return accuracy remain unresolved.) Tj ET
+BT /F1 11 Tf 1 0 0 1 645 17.0 Tm (6) Tj ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 720 405] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 15 0 R >>
+endobj
+17 0 obj
+<< /Length 820 >>
+stream
+0 0 0 rg 0 0 720 405 re f
+1 1 1 rg
+BT /F2 30 Tf 1 0 0 1 48 333.0 Tm (Next Steps) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 271.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 271.0 Tm (Install the mission package and updated chassis driver on the) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 246.0 Tm (robot.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 205.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 205.0 Tm (Confirm sensor topics and camera/depth registration.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 164.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 164.0 Tm (Calibrate pickup distance, arm poses, and gripper settings.) Tj ET
+BT /F1 20 Tf 1 0 0 1 54 123.0 Tm (\225) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 123.0 Tm (Check stopping and short return trips, then run a supervised) Tj ET
+BT /F1 20 Tf 1 0 0 1 69 98.0 Tm (retrieval mission.) Tj ET
+BT /F1 11 Tf 1 0 0 1 645 17.0 Tm (7) Tj ET
+endstream
+endobj
+18 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 720 405] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 17 0 R >>
+endobj
+xref
+0 19
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000162 00000 n 
+0000000259 00000 n 
+0000000361 00000 n 
+0000000690 00000 n 
+0000000826 00000 n 
+0000001727 00000 n 
+0000001863 00000 n 
+0000002736 00000 n 
+0000002873 00000 n 
+0000003804 00000 n 
+0000003942 00000 n 
+0000004838 00000 n 
+0000004976 00000 n 
+0000005932 00000 n 
+0000006070 00000 n 
+0000006942 00000 n 
+trailer
+<< /Size 19 /Root 1 0 R >>
+startxref
+7080
+%%EOF
