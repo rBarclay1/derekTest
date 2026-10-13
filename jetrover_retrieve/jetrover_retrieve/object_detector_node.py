@@ -37,8 +37,7 @@ class ObjectDetectorNode(Node):
         self.point_pub = self.create_publisher(PointStamped, '/detected_object_point', 10)
         self.get_logger().info('Detector ready; points contain pixel x/y and meter depth, not XYZ')
 
-    @staticmethod
-    def stamp(msg):
+    def stamp(self, msg):
         return msg.header.stamp.sec + msg.header.stamp.nanosec / 1e9
 
     def fresh_stamp(self, msg):

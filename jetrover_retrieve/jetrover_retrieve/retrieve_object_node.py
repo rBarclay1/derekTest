@@ -56,12 +56,12 @@ class RetrieveObjectNode(Node):
             'odom_topic': '/odom', 'cmd_vel_topic': '/controller/cmd_vel',
             'servo_topic': '/servo_controller',
             'controller_ready_service': '/controller_manager/init_finish',
-            'action_group_path': '/home/ubuntu/software/arm_pc/ActionGroups',
             'chassis_type': os.environ.get('MACHINE_TYPE', 'JetRover_Mecanum'),
         }
+        self.config = {}
         for name, value in defaults.items():
             self.declare_parameter(name, value, ParameterDescriptor(read_only=True))
-        self.config = {name: self.get_parameter(name).value for name in defaults}
+            self.config[name] = self.get_parameter(name).value
         self._validate_config()
         self.bridge = CvBridge()
         self.state = 'INIT'
@@ -97,7 +97,7 @@ class RetrieveObjectNode(Node):
         self.cmd_pub = self.create_publisher(Twist, self.config['cmd_vel_topic'], 1)
         self.status_pub = self.create_publisher(
             String, '~/status', QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL))
-        self.arm = ArmController(self, self.config['servo_topic'], self.config['action_group_path'])
+        self.arm = ArmController(self, self.config['servo_topic'])
         self.create_subscription(Image, self.config['color_topic'], self.color_callback,
                                  qos_profile_sensor_data)
         self.create_subscription(Image, self.config['depth_topic'], self.depth_callback,
@@ -112,35 +112,36 @@ class RetrieveObjectNode(Node):
         self.get_logger().info(self.detail)
 
     def _validate_config(self):
-        c = self.config
-        if c['mission_mode'] not in ('full', 'approach_only', 'return_test'):
+        config = self.config
+        if config['mission_mode'] not in ('full', 'approach_only', 'return_test'):
             raise ValueError('mission_mode must be full, approach_only, or return_test')
-        if c['target_color'] not in ('red', 'green', 'blue', 'any'):
+        if config['target_color'] not in ('red', 'green', 'blue', 'any'):
             raise ValueError('target_color must be red, green, blue, or any')
-        if c['chassis_type'] not in ('JetRover_Mecanum', 'JetRover_Tank'):
+        if config['chassis_type'] not in ('JetRover_Mecanum', 'JetRover_Tank'):
             raise ValueError('This mission requires a mecanum or tank chassis that can turn in place')
-        for name, value in c.items():
+        for name, value in config.items():
             if isinstance(value, (float, int)) and not isinstance(value, bool):
                 if not math.isfinite(value) or value <= 0:
                     raise ValueError(f'{name} must be finite and positive')
-        if not c['min_valid_depth_m'] <= c['grasp_distance_min'] < c['grasp_distance_max'] <= c['max_valid_depth_m']:
+        if not config['min_valid_depth_m'] <= config['grasp_distance_min'] < config['grasp_distance_max'] <= config['max_valid_depth_m']:
             raise ValueError('Grasp range must lie inside the valid depth range')
-        if c['return_linear_speed'] > c['max_linear_speed']:
+        if config['return_linear_speed'] > config['max_linear_speed']:
             raise ValueError('return_linear_speed cannot exceed max_linear_speed')
-        if c['search_yaw_speed'] > c['max_yaw_speed']:
+        if config['search_yaw_speed'] > config['max_yaw_speed']:
             raise ValueError('search_yaw_speed cannot exceed max_yaw_speed')
-        if c['max_rgb_depth_skew_sec'] > c['sensor_timeout_sec']:
+        if config['max_rgb_depth_skew_sec'] > config['sensor_timeout_sec']:
             raise ValueError('RGB/depth skew cannot exceed the sensor timeout')
-        if c['home_position_tolerance_m'] >= c['max_home_distance_m']:
+        if config['home_position_tolerance_m'] >= config['max_home_distance_m']:
             raise ValueError('Home tolerance must be smaller than the mission radius')
-        if not c['home_position_tolerance_m'] < c['return_test_distance_m'] < c['max_home_distance_m']:
+        if not config['home_position_tolerance_m'] < config['return_test_distance_m'] < config['max_home_distance_m']:
             raise ValueError('Return test distance must exceed home tolerance and be inside mission radius')
         for name in ('home_heading_tolerance_rad', 'return_turn_tolerance_rad'):
-            if c[name] >= math.pi / 2:
+            if config[name] >= math.pi / 2:
                 raise ValueError(f'{name} must be smaller than pi/2')
 
     def _transition(self, state, detail):
-        self.state, self.detail = state, detail
+        self.state = state
+        self.detail = detail
         self.state_started = time.monotonic()
         self.get_logger().info(f'{state}: {detail}')
         self._publish_status()
@@ -163,8 +164,7 @@ class RetrieveObjectNode(Node):
         age = self.get_clock().now().nanoseconds / 1e9 - stamp
         if stamp <= 0 or age > self.config['sensor_timeout_sec'] or age < -0.1:
             return None
-        # Queued duplicate or out-of-order frames must not refresh a watchdog
-        # or count toward detection/grasp confirmation.
+        # Count each frame once, even if ROS delivers it more than once.
         if stamp <= self.last_stamps.get(stream, -1.0):
             return None
         self.last_stamps[stream] = stamp
@@ -174,8 +174,13 @@ class RetrieveObjectNode(Node):
         return now - self.received.get(stream, -math.inf) <= self.config['sensor_timeout_sec']
 
     def _sensor_problem(self, now, streams):
-        missing = [name for name in streams if not self._fresh(name, now)]
-        return 'Missing or stale: ' + ', '.join(missing) if missing else None
+        missing = []
+        for name in streams:
+            if not self._fresh(name, now):
+                missing.append(name)
+        if missing:
+            return 'Missing or stale: ' + ', '.join(missing)
+        return None
 
     def depth_callback(self, msg):
         stamp = self._message_stamp(msg, 'depth')
@@ -187,7 +192,9 @@ class RetrieveObjectNode(Node):
             image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
             if image.ndim != 2:
                 raise ValueError('Expected a single-channel depth image')
-            self.latest_depth, self.depth_encoding, self.depth_stamp = image, msg.encoding, stamp
+            self.latest_depth = image
+            self.depth_encoding = msg.encoding
+            self.depth_stamp = stamp
             self.received['depth'] = time.monotonic()
         except Exception as exc:
             self._callback_failure('Depth', exc)
@@ -267,17 +274,20 @@ class RetrieveObjectNode(Node):
             return response
         try:
             if self.config['mission_mode'] == 'full':
-                self.arm.preflight()
                 self.arm.begin('ready')
         except Exception as exc:
             self._stop('ERROR', f'Arm preparation failed: {exc}')
             response.success, response.message = False, self.detail
             return response
-        self.home, self.home_frame = self.pose, self.odom_frame
+        self.home = self.pose
+        self.home_frame = self.odom_frame
         self.mission_started = time.monotonic()
         self.approach_started = None
-        self.target_color = self.target_center = None
-        self.target_count = self.grasp_count = self.lost_count = 0
+        self.target_color = None
+        self.target_center = None
+        self.target_count = 0
+        self.grasp_count = 0
+        self.lost_count = 0
         self.grasp_depth_stamp = None
         self.pick_verified = False
         self.observation = None

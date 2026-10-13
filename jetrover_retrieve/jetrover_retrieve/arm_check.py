@@ -1,4 +1,4 @@
-"""Execute one explicitly selected arm check with the mission node stopped."""
+"""Test one arm operation with the mission stopped."""
 
 import argparse
 import time
@@ -15,10 +15,8 @@ class ArmCheck(Node):
     def __init__(self, operation):
         super().__init__('arm_check')
         self.declare_parameter('servo_topic', '/servo_controller')
-        self.declare_parameter('action_group_path', '/home/ubuntu/software/arm_pc/ActionGroups')
         self.declare_parameter('controller_ready_service', '/controller_manager/init_finish')
-        self.arm = ArmController(self, self.get_parameter('servo_topic').value,
-                                 self.get_parameter('action_group_path').value)
+        self.arm = ArmController(self, self.get_parameter('servo_topic').value)
         self.operation = operation
         self.started = time.monotonic()
         self.executing = False

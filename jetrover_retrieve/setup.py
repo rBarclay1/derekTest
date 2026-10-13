@@ -18,10 +18,9 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Derek',
-    maintainer_email='student@local',
+    maintainer_email='student@example.com',
     description='JetRover automatic object detect and retrieve',
     license='Apache-2.0',
-    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             'retrieve_object = jetrover_retrieve.retrieve_object_node:main',

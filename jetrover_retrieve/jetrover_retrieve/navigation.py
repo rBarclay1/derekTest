@@ -1,7 +1,6 @@
-"""Planar odometry helpers for a clear-route return to the starting pose."""
+"""Use odometry to drive back to the starting position and heading."""
 
 import math
-from dataclasses import dataclass
 
 
 def clamp(value, low, high):
@@ -12,11 +11,11 @@ def wrap_angle(angle):
     return math.atan2(math.sin(angle), math.cos(angle))
 
 
-@dataclass(frozen=True)
 class Pose2D:
-    x: float
-    y: float
-    yaw: float
+    def __init__(self, x, y, yaw):
+        self.x = x
+        self.y = y
+        self.yaw = yaw
 
 
 def pose_from_odometry(message):
@@ -45,5 +44,7 @@ def return_command(current, home, position_tolerance, heading_tolerance,
         return 0.0, clamp(1.5 * error, -max_yaw, max_yaw), False
     error = wrap_angle(math.atan2(dy, dx) - current.yaw)
     yaw = clamp(1.5 * error, -max_yaw, max_yaw)
-    linear = 0.0 if abs(error) > turn_tolerance else min(max_linear, 0.5 * distance)
+    linear = 0.0
+    if abs(error) <= turn_tolerance:
+        linear = min(max_linear, 0.5 * distance)
     return linear, yaw, False

@@ -39,7 +39,8 @@ def largest_blob(mask, min_area, previous_center=None, max_jump_px=100.0):
     if not contours:
         return None
     if previous_center is not None:
-        candidates = []
+        largest = None
+        closest_distance = float('inf')
         for contour in contours:
             moments = cv2.moments(contour)
             if cv2.contourArea(contour) < min_area or moments['m00'] == 0:
@@ -47,11 +48,11 @@ def largest_blob(mask, min_area, previous_center=None, max_jump_px=100.0):
             cx = moments['m10'] / moments['m00']
             cy = moments['m01'] / moments['m00']
             distance = np.hypot(cx - previous_center[0], cy - previous_center[1])
-            if distance <= max_jump_px:
-                candidates.append((distance, contour))
-        if not candidates:
+            if distance <= max_jump_px and distance < closest_distance:
+                largest = contour
+                closest_distance = distance
+        if largest is None:
             return None
-        largest = min(candidates, key=lambda item: item[0])[1]
     else:
         largest = max(contours, key=cv2.contourArea)
     area = cv2.contourArea(largest)
@@ -67,10 +68,7 @@ def largest_blob(mask, min_area, previous_center=None, max_jump_px=100.0):
 
 def detect_largest_object(bgr_frame, target_color, min_area,
                           previous_center=None, max_jump_px=100.0):
-    """Return (cx, cy, area, color_name, vis) or None.
-
-    target_color may be red, green, blue, or any.
-    """
+    """Return the object's center, area, color, and marked image, or None."""
     hsv = cv2.cvtColor(bgr_frame, cv2.COLOR_BGR2HSV)
     vis = bgr_frame.copy()
     colors = HSV_RANGES.keys() if target_color == 'any' else [target_color]

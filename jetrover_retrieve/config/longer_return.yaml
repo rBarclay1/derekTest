@@ -1,0 +1,23 @@
+/**:
+  ros__parameters:
+    chassis_type: "JetRover_Mecanum"
+    allow_unverified_pick: false
+
+    # EDIT THESE: outbound distance (meters), driving speed (meters/second),
+    # and maximum turning speed (radians/second).
+    return_test_distance_m: 1.0
+    return_linear_speed: 0.08
+    max_yaw_speed: 0.30
+
+    # Speed ceiling must be at least return_linear_speed.
+    max_linear_speed: 0.10
+    search_yaw_speed: 0.12
+
+    # Distance limit must be greater than return_test_distance_m.
+    max_home_distance_m: 1.5
+
+    # Outbound timeout must allow distance / speed plus some margin.
+    return_test_timeout_sec: 30.0
+    return_timeout_sec: 90.0
+    verify_timeout_sec: 120.0
+    mission_timeout_sec: 300.0

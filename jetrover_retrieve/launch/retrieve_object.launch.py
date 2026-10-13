@@ -1,4 +1,4 @@
-"""Launch the mission with optional robot bringup and explicit motion opt-in."""
+"""Start the retrieval mission, camera, and controllers."""
 
 import os
 
