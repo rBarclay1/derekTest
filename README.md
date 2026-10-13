@@ -42,6 +42,9 @@ Two test modes help check parts of the mission:
 
 ## Files
 
+See the [file structure guide](docs/file-structure.md) for the full folder tree
+and an explanation of every file.
+
 | File or folder | What it does |
 | --- | --- |
 | `jetrover_retrieve/jetrover_retrieve/retrieve_object_node.py` | Main mission loop and start/stop services |
