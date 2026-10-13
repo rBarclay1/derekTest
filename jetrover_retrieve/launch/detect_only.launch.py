@@ -12,13 +12,14 @@ def generate_launch_description():
         get_package_share_directory('jetrover_retrieve'), 'config', 'retrieve.yaml')
     return LaunchDescription([
         DeclareLaunchArgument('target_color', default_value='red'),
+        DeclareLaunchArgument('config_file', default_value=config_path),
         DeclareLaunchArgument('show_debug_image', default_value='false'),
         Node(
             package='jetrover_retrieve',
             executable='object_detector',
             output='screen',
             parameters=[
-                config_path,
+                LaunchConfiguration('config_file'),
                 {
                     'target_color': LaunchConfiguration('target_color'),
                     'show_debug_image': ParameterValue(

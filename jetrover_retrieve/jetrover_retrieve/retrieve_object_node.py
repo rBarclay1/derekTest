@@ -25,7 +25,7 @@ from jetrover_retrieve.navigation import clamp, pose_from_odometry, return_comma
 
 
 ACTIVE_STATES = {'PREPARE', 'SEARCH', 'ALIGN', 'APPROACH', 'PICK',
-                 'VERIFY_PICK', 'RETURN_HOME', 'PLACE'}
+                 'VERIFY_PICK', 'RETURN_HOME', 'PLACE', 'TEST_OUTBOUND'}
 VISION_STATES = {'SEARCH', 'ALIGN', 'APPROACH'}
 
 
@@ -35,6 +35,8 @@ class RetrieveObjectNode(Node):
         defaults = {
             'target_color': 'red', 'show_debug_image': False,
             'auto_start': False, 'allow_unverified_pick': False,
+            'mission_mode': 'full',
+            'return_test_distance_m': 0.3, 'return_test_timeout_sec': 15.0,
             'min_object_area': 500.0, 'center_tolerance_px': 40.0,
             'grasp_distance_min': 0.16, 'grasp_distance_max': 0.28,
             'search_yaw_speed': 0.25, 'max_linear_speed': 0.08,
@@ -111,6 +113,8 @@ class RetrieveObjectNode(Node):
 
     def _validate_config(self):
         c = self.config
+        if c['mission_mode'] not in ('full', 'approach_only', 'return_test'):
+            raise ValueError('mission_mode must be full, approach_only, or return_test')
         if c['target_color'] not in ('red', 'green', 'blue', 'any'):
             raise ValueError('target_color must be red, green, blue, or any')
         if c['chassis_type'] not in ('JetRover_Mecanum', 'JetRover_Tank'):
@@ -129,6 +133,8 @@ class RetrieveObjectNode(Node):
             raise ValueError('RGB/depth skew cannot exceed the sensor timeout')
         if c['home_position_tolerance_m'] >= c['max_home_distance_m']:
             raise ValueError('Home tolerance must be smaller than the mission radius')
+        if not c['home_position_tolerance_m'] < c['return_test_distance_m'] < c['max_home_distance_m']:
+            raise ValueError('Return test distance must exceed home tolerance and be inside mission radius')
         for name in ('home_heading_tolerance_rad', 'return_turn_tolerance_rad'):
             if c[name] >= math.pi / 2:
                 raise ValueError(f'{name} must be smaller than pi/2')
@@ -143,6 +149,7 @@ class RetrieveObjectNode(Node):
         msg = String()
         msg.data = json.dumps({
             'state': self.state, 'detail': self.detail,
+            'mission_mode': self.config['mission_mode'],
             'home': vars(self.home) if self.home else None,
             'pose': vars(self.pose) if self.pose else None,
             'frame': self.home_frame, 'target_color': self.target_color,
@@ -259,8 +266,9 @@ class RetrieveObjectNode(Node):
             response.message = problem or 'Controller is not ready'
             return response
         try:
-            self.arm.preflight()
-            self.arm.begin('ready')
+            if self.config['mission_mode'] == 'full':
+                self.arm.preflight()
+                self.arm.begin('ready')
         except Exception as exc:
             self._stop('ERROR', f'Arm preparation failed: {exc}')
             response.success, response.message = False, self.detail
@@ -275,7 +283,13 @@ class RetrieveObjectNode(Node):
         self.observation = None
         self.processed_id = self.observation_id
         self.settle_started = None
-        self._transition('PREPARE', 'Saved starting pose; preparing the arm')
+        mode = self.config['mission_mode']
+        if mode == 'return_test':
+            self._transition('TEST_OUTBOUND', 'Saved home; driving a short outward leg without arm motion')
+        elif mode == 'approach_only':
+            self._transition('SEARCH', 'Approach check; arm commands disabled')
+        else:
+            self._transition('PREPARE', 'Saved starting pose; preparing the arm')
         response.success, response.message = True, 'Mission started'
         return response
 
@@ -338,6 +352,19 @@ class RetrieveObjectNode(Node):
             return
         if math.hypot(self.pose.x - self.home.x, self.pose.y - self.home.y) > self.config['max_home_distance_m']:
             self._stop('ERROR', 'Robot exceeded the configured distance from home')
+            return
+        if self.state == 'TEST_OUTBOUND':
+            if now - self.state_started > self.config['return_test_timeout_sec']:
+                self._stop('ERROR', 'Return test outward leg timed out')
+                return
+            distance = math.hypot(self.pose.x - self.home.x, self.pose.y - self.home.y)
+            if distance >= self.config['return_test_distance_m']:
+                self.stop_base()
+                self._transition('RETURN_HOME', 'Outward leg complete; returning without arm motion')
+            else:
+                twist = Twist()
+                twist.linear.x = self.config['return_linear_speed']
+                self.cmd_pub.publish(twist)
             return
         if self.state in ('PREPARE', 'PICK', 'PLACE'):
             self.stop_base()
@@ -420,8 +447,11 @@ class RetrieveObjectNode(Node):
                 self.grasp_count += 1
                 self.grasp_depth_stamp = depth_stamp
             if self.grasp_count >= self.config['confirm_frames']:
-                self.arm.begin('pick')
-                self._transition('PICK', 'Target stable in pickup range; picking')
+                if self.config['mission_mode'] == 'approach_only':
+                    self._transition('COMPLETE', 'Approach check finished in pickup range; arm was not commanded')
+                else:
+                    self.arm.begin('pick')
+                    self._transition('PICK', 'Target stable in pickup range; picking')
             return
         else:
             if self.state != 'APPROACH':
@@ -449,8 +479,11 @@ class RetrieveObjectNode(Node):
             if self.settle_started is None:
                 self.settle_started = now
             if now - self.settle_started >= self.config['home_settle_sec']:
-                self.arm.begin('place')
-                self._transition('PLACE', 'At starting pose; placing in front of the robot')
+                if self.config['mission_mode'] == 'return_test':
+                    self._transition('COMPLETE', 'Return check finished; measure physical home error')
+                else:
+                    self.arm.begin('place')
+                    self._transition('PLACE', 'At starting pose; placing in front of the robot')
             return
         self.settle_started = None
         twist = Twist()

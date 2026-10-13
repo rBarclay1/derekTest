@@ -108,7 +108,14 @@ class ArmController:
             raise RuntimeError('An arm sequence is already active')
         opened = [(10, self.config['gripper_open'])]
         closed = [(10, self.config['gripper_closed'])]
-        if operation == 'ready':
+        if operation in self.poses:
+            # Single calibration pose, preserving the current gripper state.
+            steps = [(1.5, self.poses[operation])]
+        elif operation == 'open':
+            steps = [(0.6, opened)]
+        elif operation == 'close':
+            steps = [(0.6, closed)]
+        elif operation == 'ready':
             steps = self._action(self.config['ready_action']) or [(1.0, self._pose('ready_pose'))]
             steps = steps + [(0.5, opened)]
         elif operation == 'pick':

@@ -2,6 +2,9 @@
   ros__parameters:
     target_color: "red"                 # red, green, blue, or any
     auto_start: false                   # start via /retrieve_object/start
+    mission_mode: "full"                # full, approach_only, return_test
+    return_test_distance_m: 0.3          # outward leg; return_test never commands arm
+    return_test_timeout_sec: 15.0
     allow_unverified_pick: false        # otherwise pause for operator confirmation
     show_debug_image: false             # suitable for headless robot use
     min_object_area: 500.0

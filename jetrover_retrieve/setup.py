@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'retrieve_object = jetrover_retrieve.retrieve_object_node:main',
             'object_detector = jetrover_retrieve.object_detector_node:main',
+            'arm_check = jetrover_retrieve.arm_check:main',
         ],
     },
 )

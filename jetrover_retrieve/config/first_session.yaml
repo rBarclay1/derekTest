@@ -1,0 +1,16 @@
+/**:
+  ros__parameters:
+    # Merge these overrides into retrieve.yaml, as shown in the offline guide.
+    auto_start: false
+    chassis_type: "JetRover_Mecanum"
+    allow_unverified_pick: false
+    max_linear_speed: 0.04
+    return_linear_speed: 0.03
+    search_yaw_speed: 0.12
+    max_yaw_speed: 0.2
+    max_home_distance_m: 1.0
+    return_test_distance_m: 0.3
+    return_test_timeout_sec: 20.0
+    return_timeout_sec: 90.0
+    verify_timeout_sec: 120.0
+    mission_timeout_sec: 300.0

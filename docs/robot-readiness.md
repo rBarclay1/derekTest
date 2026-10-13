@@ -1,7 +1,18 @@
 # Deferred robot work
 
-Implementation was prepared by reading the repository. No tests, build,
-simulation, or robot motion was run, per the user's instruction.
+Implementation was prepared without the robot. Fifteen offline Python control
+checks now pass with mocked ROS interfaces; no ROS build or robot motion has
+been run. Hardware readiness is still unverified.
+
+Use the [offline first-session guide](offline-robot-guide.md) for exact commands,
+expected outcomes, calibration, and recovery. A standalone browser/print version
+is included as [offline-robot-guide.html](offline-robot-guide.html).
+
+The confirmed robot is `JetRover_Mecanum`. The first-session overrides select
+this chassis and lower speeds. New `approach_only` and `return_test` mission
+modes isolate base trials from arm movement; `arm_check` supports stationary
+arm calibration and cancellation. The detector now accepts the same custom
+configuration file as the mission.
 
 ## What is implemented
 
@@ -58,5 +69,6 @@ simulation, or robot motion was run, per the user's instruction.
   calibrated camera intrinsics/extrinsics if pickup must work at varied
   locations, heights, or object sizes.
 - Add object identity tracking beyond nearest same-color contours.
-- Add meaningful automated checks and simulation after the user authorizes
-  testing; the current implementation has not been executed.
+- Add ROS integration checks and sensor/driver fault testing on the robot.
+  Existing offline checks cover control logic; they cannot validate timing,
+  calibration, physical grasping, or command expiry in the installed driver.

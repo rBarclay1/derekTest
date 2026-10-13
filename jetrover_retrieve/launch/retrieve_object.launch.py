@@ -28,6 +28,7 @@ def launch_setup(context):
         package='jetrover_retrieve', executable='retrieve_object', output='screen',
         parameters=[LaunchConfiguration('config_file'), {
             'target_color': LaunchConfiguration('target_color'),
+            'mission_mode': LaunchConfiguration('mission_mode'),
             'show_debug_image': ParameterValue(LaunchConfiguration('show_debug_image'), value_type=bool),
             'auto_start': ParameterValue(LaunchConfiguration('auto_start'), value_type=bool),
             'allow_unverified_pick': ParameterValue(LaunchConfiguration('allow_unverified_pick'), value_type=bool),
@@ -40,6 +41,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('config_file', default_value=config),
         DeclareLaunchArgument('target_color', default_value='red'),
+        DeclareLaunchArgument('mission_mode', default_value='full'),
         DeclareLaunchArgument('show_debug_image', default_value='false'),
         DeclareLaunchArgument('auto_start', default_value='false'),
         DeclareLaunchArgument('allow_unverified_pick', default_value='false'),

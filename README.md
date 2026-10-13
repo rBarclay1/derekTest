@@ -6,9 +6,16 @@ object in front of the robot. Home means the robot's position and heading
 when a mission is started. The placement point is offset from home by the
 arm's reach; it is not the object's original position.
 
-This implementation was prepared without the robot. No tests, builds, or
-robot commands were run. Poses, timings, topic availability, and navigation
-accuracy still need hardware verification.
+This implementation was prepared without the robot. Fifteen offline Python
+control checks pass with ROS interfaces mocked. No ROS build or robot commands
+have been run here. Poses, timings, topic availability, and navigation accuracy
+still need hardware verification.
+
+**Start here for the next hardware session:**
+[Offline mecanum robot guide](docs/offline-robot-guide.md), also available as
+[a standalone printable HTML file](docs/offline-robot-guide.html).
+It covers transfer, backup/install, stop checks, calibration, staged trials,
+troubleshooting, and recording results without internet.
 
 ## Mission behavior
 
@@ -90,12 +97,13 @@ These commands are instructions for later; they have not been executed.
 Use the robot's existing ROS environment and installed drivers.
 
 ```bash
+zsh
 source /home/ubuntu/ros2_ws/.robotrc
 sudo systemctl stop start_app_node.service
 # Copy this repository's jetrover_retrieve/ into ~/ros2_ws/src/.
 cd ~/ros2_ws
 colcon build --symlink-install --packages-select jetrover_retrieve
-source install/setup.bash
+source install/local_setup.zsh
 ```
 
 Also install the updated chassis driver file from
@@ -159,6 +167,37 @@ settings. Launch arguments override the corresponding YAML values for
 `target_color`, `show_debug_image`, `auto_start`, and `allow_unverified_pick`.
 Mission/arm parameters are read-only during node operation; change the
 configuration and relaunch to apply calibration changes.
+
+## First-session tools
+
+The robot is the mecanum version. Merge `config/first_session.yaml` into the
+full configuration as shown in the offline guide; it selects
+`JetRover_Mecanum`, slower speeds, and a one-meter mission radius.
+
+- `mission_mode:=approach_only` skips arm preparation, approaches the object,
+  and completes in the pickup band without pickup or return.
+- `mission_mode:=return_test` saves home, drives a short forward leg (default
+  0.30 m), returns using the normal return controller, and completes without
+  arm commands. All sensor freshness, stop, and mission-radius checks apply.
+- `mission_mode:=full` runs the normal retrieval mission and is the default.
+  The launch argument overrides the YAML `mission_mode` value.
+- `ros2 run jetrover_retrieve arm_check --operation ready_pose --execute
+  --ros-args --params-file /absolute/path/session.yaml` executes an individual
+  calibrated pose with the mission stopped. Other operations: `grasp_pose`,
+  `carry_pose`, `place_pose`, `open`, `close`, `ready`, `pick`, `place`.
+  Pose-only operations preserve the gripper command. `/arm_check/stop`
+  cancels remaining steps; a published move can finish.
+- `python3 scripts/robot_preflight.py` checks the installed robot dependencies
+  without starting ROS nodes or commanding movement.
+
+Run the offline regression checks from the repository root:
+
+```bash
+python3 -B -m unittest discover -s jetrover_retrieve/test -v
+```
+
+These checks exercise control logic with mocked ROS interfaces, not ROS
+integration, camera processing, driver timing, or physical motion.
 
 ## Arm configuration
 
