@@ -1,6 +1,33 @@
 # Progress
 
-## October 13, 2026
+
+
+######
+
+2. Robot — Terminal 1: start the hardware driver
+
+Once those checks are clear:
+
+ros2 launch ros_robot_controller ros_robot_controller.launch.py
+
+Leave this running.
+
+3. Mac — Terminal 2: connect
+
+ssh ubuntu@192.168.149.1
+
+Robot — Terminal 2: read the gripper
+
+source /home/ubuntu/ros2_ws/.robotrc
+source /home/ubuntu/ros2_ws/install/local_setup.zsh
+
+4. Only if the fresh reading is between 495 and 505, and the gripper has room to move slightly in either direction, run this once in Robot — Terminal 2:
+
+ros2 topic pub --once /ros_robot_controller/bus_servo/set_position ros_robot_controller_msgs/msg/ServosPosition "{duration: 1.0, position: [{id: 10, position: 509}]}"
+
+######
+
+
 
 - Installed and built the retrieval package and modified drivers.
 - Drove about 1 meter forward at 0.08 m/s, returned, and restored heading.
@@ -46,6 +73,27 @@ published command for each servo in the manual test log, not measured readback.
 | 4 | Wrist pitch | 325 |
 | 5 | Gripper rotation | 500 |
 | 10 | Gripper | 200 |
+
+
+
+ros2 topic pub --once /ros_robot_controller/bus_servo/set_position ros_robot_controller_msgs/msg/ServosPosition "{duration: 1.0, position: [{id: 10, position: 509}, {id: 10, position: 509}]}"
+
+
+## GRIPPER CLOSED IS 700 on nothing tho
+
+## need to know what the gripper pos is when on cube
+
+## PICKUP
+ros2 topic pub --once /ros_robot_controller/bus_servo/set_position ros_robot_controller_msgs/msg/ServosPosition "{duration: 2.0, position: [{id: 10, position: 350}, {id: 4, position: 400}, {id: 3, position: 400}, {id: 2, position: 100}]}"
+
+## READY
+ros2 topic pub --once /ros_robot_controller/bus_servo/set_position ros_robot_controller_msgs/msg/ServosPosition "{duration: 2.0, position: [{id: 10, position: 200}, {id: 4, position: 325}, {id: 3, position: 0}, {id: 2, position: 750}]}"
+
+
+## CLOSE AND READY
+ros2 topic pub --once /ros_robot_controller/bus_servo/set_position ros_robot_controller_msgs/msg/ServosPosition "{duration: 2.0, position: [{id: 3, position: 0}, {id: 2, position: 600}, {id: 4, position: 325}, {id: 10, position: 200}]}"
+
+
 
 Arm pose pairs: `[1, 500, 2, 750, 3, 0, 4, 325, 5, 500]`.
 The gripper is fully open at 200. This pose is recorded here for calibration;
