@@ -1,0 +1,44 @@
+{
+  "state": "cube_lifted_and_held",
+  "confirmation": "User confirmed cube lifted and held securely",
+  "lift_verified_by": "user observation",
+  "captured_utc": "2026-10-27T19:54:01.276462+00:00",
+  "servo_positions_measured": {
+    "1": 499,
+    "2": 183,
+    "3": 396,
+    "4": 414,
+    "5": 498,
+    "10": 483
+  },
+  "last_commanded_targets": {
+    "2": 198,
+    "3": 400,
+    "4": 417,
+    "10": 515
+  },
+  "cube_detection": {
+    "detected": true,
+    "method": "HSV red mask, erosion/dilation, largest contour",
+    "min_area_px": 20,
+    "center_px": {
+      "x": 341,
+      "y": 340
+    },
+    "contour_area_px": 4408.0,
+    "bounding_box_px": {
+      "x": 281,
+      "y": 320,
+      "width": 122,
+      "height": 40
+    },
+    "image_size_px": {
+      "width": 640,
+      "height": 360
+    },
+    "touches_image_edge": true,
+    "center_definition": "Centroid of visible red contour",
+    "depth_at_visible_center_m": null
+  },
+  "robot_capture_folder": "/home/ubuntu/grip-data/cube-grip-calibration/20261027T195401-held-ea79bed6"
+}

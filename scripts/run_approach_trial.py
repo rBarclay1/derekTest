@@ -7,7 +7,7 @@ import subprocess
 import tempfile
 
 
-def main():
+def run_ros_script(script, timeout=35):
     with open('/tmp/derek-approach-trial.lock', 'w') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         process = None
@@ -46,9 +46,8 @@ def main():
                 profile.flush()
                 env['FASTRTPS_DEFAULT_PROFILES_FILE'] = profile.name
                 env['RMW_IMPLEMENTATION'] = 'rmw_fastrtps_cpp'
-                subprocess.run(['/usr/bin/python3', str(
-                    Path(__file__).resolve().with_name('approach_camera_trial.py'))],
-                    env=env, timeout=35, check=True)
+                subprocess.run(['/usr/bin/python3', str(script)],
+                    env=env, timeout=timeout, check=True)
         finally:
             if alias_added:
                 subprocess.run(['sudo', '-n', 'ip', 'addr', 'del',
@@ -56,4 +55,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    run_ros_script(Path(__file__).resolve().with_name('approach_camera_trial.py'))

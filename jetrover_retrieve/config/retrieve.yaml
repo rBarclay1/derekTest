@@ -47,7 +47,7 @@
     gripper_min: 200
     gripper_max: 700
     gripper_open: 200
-    gripper_closed: 600
+    gripper_closed: 515                 # one manual lift confirmed; measured holding position 483–484
     # Servo ID / pulse pairs (1–5). Gripper is managed separately.
     # These are inherited starting poses, not hardware-calibrated poses.
     ready_pose: [1, 500, 2, 750, 3, 40, 4, 210, 5, 500]

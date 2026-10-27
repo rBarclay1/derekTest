@@ -1,0 +1,45 @@
+{
+  "trial": "20261027T195855-f54b1570",
+  "status": "stopped",
+  "stages": [
+    {
+      "stage": "00-held-start",
+      "captured_utc": "2026-10-27T19:58:58.468681+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 184,
+        "3": 396,
+        "4": 415,
+        "5": 498,
+        "10": 484
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 346,
+          "y": 308
+        },
+        "contour_area_px": 13676.0,
+        "bounding_box_px": [
+          279,
+          255,
+          144,
+          105
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 9921
+    }
+  ],
+  "lift_success": "awaiting_user_confirmation",
+  "wheel_commands_sent": false,
+  "from_air": true,
+  "joint2_ground_target": 112,
+  "error": "Battery missing/stale or below 10 V trial cutoff"
+}

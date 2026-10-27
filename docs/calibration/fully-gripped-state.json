@@ -1,0 +1,42 @@
+{
+  "state": "stationary_grip_reference_lift_failed",
+  "confirmation": "User confirmed stationary grip",
+  "lift_verified": false,
+  "lift_test_result": "Failed: user reported grip insufficient when joint 2 was raised from 92 toward 200 (measured 187).",
+  "grip_sufficient_for_lift": false,
+  "captured_utc": "2026-10-27T19:48:19.407070+00:00",
+  "servo_positions_measured": {
+    "1": 499,
+    "2": 92,
+    "3": 396,
+    "4": 415,
+    "5": 501,
+    "10": 467
+  },
+  "gripper_commanded_target": 469,
+  "cube_detection": {
+    "detected": true,
+    "method": "HSV red mask, erosion/dilation, largest contour",
+    "min_area_px": 20,
+    "center_px": {
+      "x": 347,
+      "y": 336
+    },
+    "contour_area_px": 6145.0,
+    "bounding_box_px": {
+      "x": 278,
+      "y": 312,
+      "width": 144,
+      "height": 48
+    },
+    "image_size_px": {
+      "width": 640,
+      "height": 360
+    },
+    "touches_image_edge": true,
+    "center_definition": "Centroid of visible red contour; not a reconstructed full cube center",
+    "depth_at_visible_center_m": null
+  },
+  "robot_capture_folder": "/home/ubuntu/grip-data/cube-grip-calibration/20261027T194819-grasp-ded27e76",
+  "notes": "Reference for this cube and arm pose; not a calibrated pickup trajectory."
+}

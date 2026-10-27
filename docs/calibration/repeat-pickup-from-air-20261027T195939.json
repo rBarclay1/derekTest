@@ -1,0 +1,185 @@
+{
+  "trial": "20261027T195939-6f5a9757",
+  "status": "sequence_completed",
+  "stages": [
+    {
+      "stage": "00-held-start",
+      "captured_utc": "2026-10-27T19:59:42.236489+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 184,
+        "3": 395,
+        "4": 415,
+        "5": 499,
+        "10": 483
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 346,
+          "y": 308
+        },
+        "contour_area_px": 13680.5,
+        "bounding_box_px": [
+          279,
+          255,
+          144,
+          105
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 9852
+    },
+    {
+      "stage": "01-lowered-target112",
+      "captured_utc": "2026-10-27T19:59:47.311477+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 102,
+        "3": 396,
+        "4": 415,
+        "5": 499,
+        "10": 484
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 346,
+          "y": 309
+        },
+        "contour_area_px": 13897.0,
+        "bounding_box_px": [
+          276,
+          254,
+          149,
+          106
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 9891
+    },
+    {
+      "stage": "02-open",
+      "captured_utc": "2026-10-27T19:59:50.417648+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 102,
+        "3": 395,
+        "4": 415,
+        "5": 499,
+        "10": 284
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 346,
+          "y": 316
+        },
+        "contour_area_px": 9740.0,
+        "bounding_box_px": [
+          290,
+          268,
+          120,
+          92
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 9890
+    },
+    {
+      "stage": "03-closed",
+      "captured_utc": "2026-10-27T19:59:53.515459+00:00",
+      "servo_positions": {
+        "1": 498,
+        "2": 102,
+        "3": 396,
+        "4": 415,
+        "5": 498,
+        "10": 487
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 341,
+          "y": 315
+        },
+        "contour_area_px": 9791.0,
+        "bounding_box_px": [
+          282,
+          266,
+          120,
+          94
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 9889
+    },
+    {
+      "stage": "04-lifted",
+      "captured_utc": "2026-10-27T19:59:58.590568+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 184,
+        "3": 396,
+        "4": 415,
+        "5": 499,
+        "10": 487
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 340,
+          "y": 315
+        },
+        "contour_area_px": 9583.5,
+        "bounding_box_px": [
+          284,
+          268,
+          116,
+          92
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 9789
+    }
+  ],
+  "lift_success": "awaiting_user_confirmation",
+  "wheel_commands_sent": false,
+  "from_air": true,
+  "joint2_ground_target": 112,
+  "next_command": {
+    "id": 2,
+    "target": 198,
+    "duration": 4
+  }
+}

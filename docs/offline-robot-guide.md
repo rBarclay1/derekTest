@@ -4,6 +4,33 @@ Robot: Hiwonder JetRover mecanum, Dabai camera, ROS 2 Humble.
 Connect the Mac to the robot's Wi-Fi. Use the existing robot shell for all
 source commands below.
 
+## Stationary cube search (installed camera-check scripts)
+
+With NetBird connected and the robot application running, SSH to Derek
+using the [startup guide](startup-netbird.md). Clear space for the arm,
+place the red cube on the floor ahead, and run:
+
+```bash
+python3 ~/camera-check/run_camera_search.py
+```
+
+The script tilts joint 4 up/down within pulses 149–300, confirms the red
+target over several fresh frames, then centers it vertically and exits.
+It sends no wheel commands and does not rotate the arm base. Horizontal
+centering is not performed. Press Ctrl+C to stop issuing new targets;
+the most recent short servo movement can finish.
+
+It stops after 60 seconds if unsuccessful, or on stale camera frames,
+missing battery telemetry, or battery below the trial's 10 V cutoff.
+Its 20-pixel contour threshold is experimental: it detects red regions,
+not cube shape, and far/small targets can still be missed. The launcher
+temporarily restores local access to the old ROS hotspot address and
+removes that alias when done. It shares a lock with the approach trial
+so both scripts cannot run together.
+
+Last image/log on Derek: `~/camera-check/camera-search.png` and
+`~/camera-check/camera-search.json`.
+
 ## Copy and build
 
 Skip this section if the current code is already installed. Stop the mission

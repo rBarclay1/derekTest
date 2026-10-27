@@ -1,0 +1,156 @@
+{
+  "trial": "20261027T195623-5d092dee",
+  "status": "sequence_completed",
+  "stages": [
+    {
+      "stage": "00-ground-closed",
+      "captured_utc": "2026-10-27T19:56:26.897799+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 92,
+        "3": 397,
+        "4": 419,
+        "5": 499,
+        "10": 484
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 341,
+          "y": 338
+        },
+        "contour_area_px": 5130.5,
+        "bounding_box_px": [
+          280,
+          315,
+          126,
+          45
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 10162
+    },
+    {
+      "stage": "01-open",
+      "captured_utc": "2026-10-27T19:56:29.978684+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 86,
+        "3": 397,
+        "4": 416,
+        "5": 500,
+        "10": 286
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 348,
+          "y": 305
+        },
+        "contour_area_px": 16082.5,
+        "bounding_box_px": [
+          274,
+          245,
+          160,
+          115
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 10175
+    },
+    {
+      "stage": "02-closed",
+      "captured_utc": "2026-10-27T19:56:33.074136+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 86,
+        "3": 397,
+        "4": 417,
+        "5": 498,
+        "10": 481
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 348,
+          "y": 309
+        },
+        "contour_area_px": 13977.0,
+        "bounding_box_px": [
+          278,
+          254,
+          150,
+          106
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 10179
+    },
+    {
+      "stage": "03-lifted",
+      "captured_utc": "2026-10-27T19:56:38.184761+00:00",
+      "servo_positions": {
+        "1": 499,
+        "2": 184,
+        "3": 396,
+        "4": 415,
+        "5": 498,
+        "10": 483
+      },
+      "cube_detection": {
+        "detected": true,
+        "center_px": {
+          "x": 346,
+          "y": 308
+        },
+        "contour_area_px": 13703.0,
+        "bounding_box_px": [
+          279,
+          255,
+          145,
+          105
+        ],
+        "touches_image_edge": true,
+        "depth_at_visible_center_m": null
+      },
+      "image_size_px": [
+        640,
+        360
+      ],
+      "depth_encoding": "16UC1",
+      "battery_mV": 10098
+    }
+  ],
+  "lift_success": "user_confirmed",
+  "wheel_commands_sent": false,
+  "next_command": {
+    "id": 2,
+    "target": 198,
+    "duration": 4
+  },
+  "user_observation": "Cube picked up again. On release, joint 2 dropped lower, appearing caught on or supported by the cube.",
+  "next_trial": {
+    "joint2_ground_target": 112,
+    "previous_joint2_ground_target": 92,
+    "status": "proposed_not_tested",
+    "purpose": "Increase ground clearance before opening gripper; verify measured pose and contact before repeating."
+  }
+}
