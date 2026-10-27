@@ -1,0 +1,14 @@
+{
+  "detected": true,
+  "width": 640,
+  "height": 360,
+  "rgb_depth_gap_sec": 0.005349874496459961,
+  "rgb_age_sec": 0.17302584648132324,
+  "x": 327,
+  "y": 194,
+  "area": 456.5,
+  "depth_m": 0.5149999856948853,
+  "horizontal_offset_px": 7.0,
+  "bearing_deg": 0.9381369565255724,
+  "camera_x_m": 0.008433146448686204
+}

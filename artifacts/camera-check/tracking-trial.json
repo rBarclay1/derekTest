@@ -1,0 +1,19 @@
+{
+  "start_pulse": 161,
+  "final_pulse": 160,
+  "last_target": 161,
+  "limits": [
+    149,
+    180
+  ],
+  "counts": {
+    "frames": 743,
+    "detections": 743,
+    "commands": 0
+  },
+  "last_detection": [
+    315,
+    176
+  ],
+  "events": []
+}

@@ -1,0 +1,80 @@
+{
+  "/depth_cam/depth/camera_info": {
+    "count": 181,
+    "width": 640,
+    "height": 360,
+    "k": [
+      361.9645690917969,
+      0.0,
+      321.07281494140625,
+      0.0,
+      361.9645690917969,
+      180.22019958496094,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "frame": "depth_cam_color_optical_frame"
+  },
+  "/depth_cam/rgb/camera_info": {
+    "count": 177,
+    "width": 640,
+    "height": 360,
+    "k": [
+      361.9645690917969,
+      0.0,
+      321.07281494140625,
+      0.0,
+      361.9645690917969,
+      180.22019958496094,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "frame": "depth_cam_color_optical_frame"
+  },
+  "/depth_cam/rgb/image_raw": {
+    "count": 177,
+    "width": 640,
+    "height": 360,
+    "encoding": "rgb8",
+    "step": 1920,
+    "stamp": 1793123548.351924,
+    "file": "depth_cam_rgb_image_raw.bin"
+  },
+  "/depth_cam/depth/image_raw": {
+    "count": 181,
+    "width": 640,
+    "height": 360,
+    "encoding": "16UC1",
+    "step": 1280,
+    "stamp": 1793123548.3646688,
+    "file": "depth_cam_depth_image_raw.bin"
+  },
+  "/depth_cam/ir/camera_info": {
+    "count": 180,
+    "width": 640,
+    "height": 480,
+    "k": [
+      361.9645690917969,
+      0.0,
+      321.07281494140625,
+      0.0,
+      361.9645690917969,
+      180.22019958496094,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "frame": "depth_cam_color_optical_frame"
+  },
+  "/depth_cam/ir/image_raw": {
+    "count": 180,
+    "width": 640,
+    "height": 480,
+    "encoding": "mono16",
+    "step": 1280,
+    "stamp": 1793123548.328393,
+    "file": "depth_cam_ir_image_raw.bin"
+  }
+}

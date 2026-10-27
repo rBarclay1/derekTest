@@ -16,6 +16,9 @@ See [progress and arm readings](docs/progress.md) for the current notes.
 
 ## Setup and use
 
+After a restart, follow the [startup and NetBird guide](docs/startup-netbird.md)
+to connect Wi-Fi, fix the clock, and SSH from the Mac.
+
 Follow the [robot guide](docs/offline-robot-guide.md) for copying, building,
 launching, stopping, and calibrating. It has separate Mac and robot commands.
 The robot uses its existing ROS 2 Humble installation and Hiwonder drivers.

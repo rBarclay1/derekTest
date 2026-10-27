@@ -1,0 +1,115 @@
+{
+  "manual_distance_ft": 5,
+  "min_area_used_standard": 20,
+  "standard_detected": false,
+  "seeded_measurements": [
+    {
+      "x": 305,
+      "y": 173,
+      "area": 35.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.434000015258789
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 35.5,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.4550000429153442
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 35.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.434000015258789
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 35.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.651,
+      "floor_depth_below_m": 1.4550000429153442
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 36.5,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.4550000429153442
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 37.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.4550000429153442
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 36.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.4550000429153442
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 39.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.597,
+      "floor_depth_below_m": 1.4550000429153442
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 37.5,
+      "width": 9,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.434000015258789
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 37.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.4550000429153442
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 34.0,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.434000015258789
+    },
+    {
+      "x": 305,
+      "y": 173,
+      "area": 35.5,
+      "width": 8,
+      "height": 8,
+      "candidate_depth_m": 1.623,
+      "floor_depth_below_m": 1.434000015258789
+    }
+  ]
+}

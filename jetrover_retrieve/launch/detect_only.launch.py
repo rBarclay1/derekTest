@@ -12,6 +12,7 @@ def generate_launch_description():
         get_package_share_directory('jetrover_retrieve'), 'config', 'retrieve.yaml')
     return LaunchDescription([
         DeclareLaunchArgument('target_color', default_value='red'),
+        DeclareLaunchArgument('min_object_area', default_value='500.0'),
         DeclareLaunchArgument('config_file', default_value=config_path),
         DeclareLaunchArgument('show_debug_image', default_value='false'),
         Node(
@@ -22,6 +23,8 @@ def generate_launch_description():
                 LaunchConfiguration('config_file'),
                 {
                     'target_color': LaunchConfiguration('target_color'),
+                    'min_object_area': ParameterValue(
+                        LaunchConfiguration('min_object_area'), value_type=float),
                     'show_debug_image': ParameterValue(
                         LaunchConfiguration('show_debug_image'), value_type=bool),
                 },

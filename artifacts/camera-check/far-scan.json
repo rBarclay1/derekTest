@@ -1,0 +1,72 @@
+{
+  "start": 163,
+  "final": 234,
+  "cube": null,
+  "steps": [
+    {
+      "target": 173,
+      "measured": 169,
+      "cube": null
+    },
+    {
+      "target": 179,
+      "measured": 173,
+      "cube": null
+    },
+    {
+      "target": 183,
+      "measured": 179,
+      "cube": null
+    },
+    {
+      "target": 189,
+      "measured": 185,
+      "cube": null
+    },
+    {
+      "target": 195,
+      "measured": 191,
+      "cube": null
+    },
+    {
+      "target": 201,
+      "measured": 197,
+      "cube": null
+    },
+    {
+      "target": 207,
+      "measured": 204,
+      "cube": null
+    },
+    {
+      "target": 214,
+      "measured": 209,
+      "cube": null
+    },
+    {
+      "target": 219,
+      "measured": 215,
+      "cube": null
+    },
+    {
+      "target": 225,
+      "measured": 222,
+      "cube": null
+    },
+    {
+      "target": 232,
+      "measured": 228,
+      "cube": null
+    },
+    {
+      "target": 238,
+      "measured": 234,
+      "cube": null
+    },
+    {
+      "target": 240,
+      "measured": 236,
+      "cube": null
+    }
+  ]
+}
